@@ -71,6 +71,16 @@ async function sendRequest() {
             updateResponse(JSON.stringify(data,null,4));
             break;
         case "PUT":
+            response = await fetch(apiURL, {
+                method: 'PUT',
+                body: JSON.stringify(requestParams),
+                headers: {
+                    "Content-type" : "application/json; charset=UTF-8"
+                }
+            });
+            data = await response.json();
+            updateResponse(JSON.stringify(data,null,4));
+            break;
         case "POST":
             response = await fetch(apiURL, {
                 method: 'POST',
@@ -78,6 +88,7 @@ async function sendRequest() {
             });
             data = await response.json();
             updateResponse(JSON.stringify(data,null,4));
+            break;
         case "DELETE":
 
         default:
