@@ -16,3 +16,8 @@ h1 {
     font-size: 15px;
     color: red;
 }
+
+#author {
+    text-align: center;
+    margin-top: -10px;
+}
