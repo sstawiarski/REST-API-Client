@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>REST API Client</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>REST API Client<small> by Shawn Stawiarski</small></h1>
+      <div class="jumbotron">
+        <h3>Send new API Request</h3>
+        <form id="requestInputForm">
+          <div class="form-group">
+            <label for="apiURL">API URL</label>
+            <input type="text" class="form-control" id="apiURL" placeholder="Enter the API URL...">
+          </div>
+          <div class="form-group">
+            <label for="requestTypeInput">Request type</label>
+            <select id="requestTypeInput" class="form-control">
+              <option value="GET">GET</option>
+              <option value="POST">POST</option>
+              <option value="PUT">PUT</option>
+              <option value="DELETE">DELETE</option>
+            </select>
+          </div>
+        </form>
+          
+            <label>Request parameters</label>
+            <form id="requestPairs">
+                <div class="form-row">
+                    <div class="col">
+                        <input type="text" class="form-control" id="key" placeholder="Key">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" id="value" placeholder="Value">
+                    </div>
+                    <div id="paramButtons" class="col">
+                        <a id="addButton" href="#" onclick="addPair()">(+)</a>
+                    </div>
+                </div>     
+            </form>
+            <div>
+            </br>
+                <button id="sendReqBtn" class="btn btn-primary" onclick="sendRequest()">Send request</button>
+            </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+            <div id="original">
+                <h4>Request</h4>
+                <div id="original-text" class="card card-body bg-light">
+                </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div id="response">
+                <h4>Response</h4>
+                <div id="responseText" class="card card-body bg-light"></div>
+            </div>
+          </div>
+      </div>
+      <div class="footer">
+        <p>&copy <a href="http://shawnstawiarski.com" target="_blank">shawnstawiarski.com</a></p>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="bootstrap.min.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
