@@ -28,7 +28,7 @@ function removePair() : void {
 }
 
 async function sendRequest() {
-    const apiURL = document.getElementById('apiURL').value;
+    const apiURL: string = document.getElementById('apiURL').value;
 
     if (apiURL == "") {
         let parent = document.getElementById("apiURL").parentElement;
@@ -40,9 +40,9 @@ async function sendRequest() {
         return;
     }
 
-    const requestType = document.getElementById('requestTypeInput').value;
+    const requestType: string = document.getElementById('requestTypeInput').value;
 
-    let requestParams = {};
+    let requestParams: Object = {};
 
     let paramRows = document.querySelector("#requestPairs").children;
     let paramArr = [];
@@ -55,31 +55,29 @@ async function sendRequest() {
         paramArr.push(rowArr);
     }
 
-    console.log(paramArr);
-
     requestParams = paramArr.reduce((a, [key, val]) => {
         a[`"${key}"`] = val;
         return a;
     }, {});
 
-    console.log(requestParams);
+    updateRequest(requestType, apiURL, JSON.stringify(requestParams,null,4));
+
+    let response;
+    let data;
     switch (requestType) {
         case "GET":
-            let responseContainer = document.getElementById('responseText');
-            if (document.getElementById('final-response') != null) {
-                responseContainer.removeChild(document.getElementById('final-response'));
-            }
-            let response = await fetch(apiURL);
-            let data = await response.json();
-            let newPre = document.createElement("pre");
-            newPre.setAttribute("id", "final-response");
-            newPre.appendChild(document.createTextNode(JSON.stringify(data, null, 4)));
-            responseContainer.appendChild(newPre);
+            response = await fetch(apiURL);
+            data = await response.json();
+            updateResponse(JSON.stringify(data,null,4));
             break;
         case "PUT":
-
         case "POST":
-
+            response = await fetch(apiURL, {
+                method: 'POST',
+                body: JSON.stringify(requestParams)
+            });
+            data = await response.json();
+            updateResponse(JSON.stringify(data,null,4));
         case "DELETE":
 
         default:
@@ -87,3 +85,30 @@ async function sendRequest() {
     }
     
 } 
+
+async function updateResponse(response: string) {
+    let responseContainer = document.getElementById('responseText');
+
+    if (document.getElementById('final-response') != null) {
+        responseContainer.removeChild(document.getElementById('final-response'));
+    }
+
+    let newPre = document.createElement("pre");
+    newPre.setAttribute("id", "final-response");
+    newPre.appendChild(document.createTextNode(response));
+    responseContainer.appendChild(newPre);
+}
+
+async function updateRequest(type: string, URL: string, data: string) {
+    let requestContainer = document.getElementById('requestText');
+
+    if (document.getElementById('final-request') != null) {
+        requestContainer.removeChild(document.getElementById('final-request'));
+    }
+
+    let newPre = document.createElement("pre");
+    newPre.setAttribute("id", "final-request");
+    let request = `${type}\nURL: ${URL}\nData:\n${data}`;
+    newPre.appendChild(document.createTextNode(request));
+    requestContainer.appendChild(newPre);
+}
