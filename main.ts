@@ -146,6 +146,10 @@ function submitRequest() {
             if (err instanceof TypeError) {
                 if (err.message == "Cross origin requests are only supported for HTTP.") {
                     displayAlert("Malformed HTTP URL entered");
+                } else if (err.message == "A server with the specified hostname could not be found.") {
+                    displayAlert("The API URL could not be found. Check spelling and try again");
+                } else {
+                    alert(err.message);
                 }
             } else {
                 alert(err.message);
