@@ -90,7 +90,15 @@ async function sendRequest() {
             updateResponse(JSON.stringify(data,null,4));
             break;
         case "DELETE":
-
+            response = await fetch(apiURL, {
+                method: 'DELETE',
+                headers: {
+                    "Content-type" : "application/json; charset=UTF-8"
+                }
+            });
+            data = await response.json();
+            updateResponse(JSON.stringify(data,null,4));
+            break;
         default:
             return;
     }
@@ -131,4 +139,28 @@ function removeWarning() {
         }
         let parent = document.getElementById("apiURL").parentElement;
         parent.removeChild(div);
+}
+
+function submitRequest() {
+        sendRequest().catch(function handleError(err) {
+            if (err instanceof TypeError) {
+                if (err.message == "Cross origin requests are only supported for HTTP.") {
+                    displayAlert("Malformed HTTP URL entered");
+                }
+            } else {
+                alert(err.message);
+            }
+        });
+  
+}
+
+function displayAlert(text: string) : void {
+    let container = document.querySelector('.container');
+
+    let div = document.createElement("div");
+    div.className = "alert alert-danger alert-dismissible fade in show";
+    div.setAttribute("role", "alert");
+    div.id = "error-message";
+    div.innerHTML = `<strong>ERROR: </strong> ${text}.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>`;
+    container.prepend(div);
 }
