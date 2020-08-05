@@ -1,6 +1,13 @@
+body {
+    background: rgb(179,200,251);
+    background: linear-gradient(0deg, rgba(179,200,251,1) 35%, rgba(129,166,233,1) 100%);
+  }
+
 h1 {
     text-align: center;
     padding-top: 15px;
+    color: white;
+    text-shadow: 2px 2px 4px #000;
 }
 
 .form-row {
@@ -20,4 +27,6 @@ h1 {
 #author {
     text-align: center;
     margin-top: -10px;
+    color: white;
+    text-shadow: 2px 2px 4px #000;
 }
