@@ -123,3 +123,12 @@ async function updateRequest(type: string, URL: string, data: string) {
     newPre.appendChild(document.createTextNode(request));
     requestContainer.appendChild(newPre);
 }
+
+function removeWarning() {
+        let div = document.getElementById("urlMalformAlert");
+        if (div == null) {
+            return;
+        }
+        let parent = document.getElementById("apiURL").parentElement;
+        parent.removeChild(div);
+}
