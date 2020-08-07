@@ -28,7 +28,8 @@ function removePair() : void {
 }
 
 async function sendRequest() {
-    const apiURL: string = document.getElementById('apiURL').value;
+    const urlBox: HTMLInputElement = document.getElementById('apiURL') as HTMLInputElement;
+    const apiURL: string = urlBox.value;
 
     if (apiURL == "") {
         let parent = document.getElementById("apiURL").parentElement;
@@ -40,7 +41,8 @@ async function sendRequest() {
         return;
     }
 
-    const requestType: string = document.getElementById('requestTypeInput').value;
+    const reqDropdown: HTMLSelectElement = document.getElementById('requestTypeInput') as HTMLSelectElement;
+    const requestType: string = reqDropdown.value;
 
     let requestParams: Object = {};
 
@@ -50,7 +52,8 @@ async function sendRequest() {
         let rowArr = [];
         let colRows = paramRows[i].children;
         for (let j = 0; j < colRows.length-1; j++) {
-            rowArr.push(colRows[j].firstElementChild.value);
+            let col = colRows[j].firstElementChild as HTMLInputElement;
+            rowArr.push(col.value);
         }
         paramArr.push(rowArr);
     }
@@ -62,8 +65,8 @@ async function sendRequest() {
 
     updateRequest(requestType, apiURL, JSON.stringify(requestParams,null,4));
 
-    let response;
-    let data;
+    let response: any;
+    let data: any;
     switch (requestType) {
         case "GET":
             response = await fetch(apiURL);
@@ -106,10 +109,12 @@ async function sendRequest() {
 } 
 
 async function updateResponse(response: string) {
-    let responseContainer = document.getElementById('responseText');
 
-    if (document.getElementById('final-response') != null) {
-        responseContainer.removeChild(document.getElementById('final-response'));
+    let responseContainer = document.getElementById('responseText') as HTMLDivElement;
+    let responseText = document.getElementById('final-response') as HTMLPreElement;
+
+    if (responseText != null) {
+        responseContainer.removeChild(responseText);
     }
 
     let newPre = document.createElement("pre");
@@ -119,9 +124,10 @@ async function updateResponse(response: string) {
 }
 
 async function updateRequest(type: string, URL: string, data: string) {
-    let requestContainer = document.getElementById('requestText');
+    let requestContainer = document.getElementById('requestText') as HTMLDivElement;
+    let requestText = document.getElementById('final-request') as HTMLPreElement;
 
-    if (document.getElementById('final-request') != null) {
+    if (requestText != null) {
         requestContainer.removeChild(document.getElementById('final-request'));
     }
 
@@ -133,10 +139,11 @@ async function updateRequest(type: string, URL: string, data: string) {
 }
 
 function removeWarning() {
-        let div = document.getElementById("urlMalformAlert");
+        let div = document.getElementById("urlMalformAlert") as HTMLDivElement;
         if (div == null) {
             return;
         }
+
         let parent = document.getElementById("apiURL").parentElement;
         parent.removeChild(div);
 }
@@ -159,7 +166,7 @@ function submitRequest() {
 }
 
 function displayAlert(text: string) : void {
-    let container = document.querySelector('.container');
+    let container = document.querySelector('.container') as HTMLDivElement;
 
     let div = document.createElement("div");
     div.className = "alert alert-danger alert-dismissible fade in show";
